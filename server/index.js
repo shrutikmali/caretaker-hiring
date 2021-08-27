@@ -1,11 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const customerRoutes = require('./routes/customer.js');
+const caretakerRoutes = require('./routes/caretaker.js');
 
 const app = express();
 app.use(express.json({limit: '30mb', extended: true}));
 app.use(express.urlencoded({limit: '30mb', extended: true}));
 app.use(cors());
+app.use('/customer', customerRoutes);
+app.use('/caretaker', caretakerRoutes);
 
 
 const PORT = process.env.PORT || 5000;
