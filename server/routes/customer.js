@@ -1,8 +1,12 @@
+const { findCaretakers } = require('../controllers/customer.js');
+const auth = require('../middleware/auth.js')
+
 const express = require('express');
 
 const router = express.Router();
-
+router.use(auth);
 router.get('/', (req, res) => res.send("Customer").status(200));
+router.get('/find', findCaretakers);
 /*
 
 1. Find caretakers (GET)
