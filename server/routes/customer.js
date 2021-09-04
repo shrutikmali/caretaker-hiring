@@ -1,4 +1,4 @@
-const { findCaretakers, pendingRequests } = require('../controllers/customer.js');
+const { findCaretakers, pendingRequests, currentHires } = require('../controllers/customer.js');
 const auth = require('../middleware/auth.js')
 
 const express = require('express');
@@ -8,6 +8,7 @@ router.use(auth);
 router.get('/', (req, res) => res.send("Customer").status(200));
 router.get('/find', findCaretakers);
 router.get('/pending', pendingRequests);
+router.get('/current', currentHires);
 /*
 
 1. Find caretakers (GET)

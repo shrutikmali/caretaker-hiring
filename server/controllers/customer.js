@@ -22,5 +22,20 @@ const pendingRequests = async (req, res) => {
   }
 }
 
+const currentHires = async (req, res) => {
+  const { customerID } = req.body;
+  try {
+    const { currentHires } = await Customer.findById(customerID);
+    res.status(200).json(currentHires);
+  }
+  catch (error) {
+    res.status(500).json(error);
+  }
+}
 
-module.exports = { findCaretakers, pendingRequests };
+
+module.exports = { 
+  findCaretakers, 
+  pendingRequests, 
+  currentHires,
+};
