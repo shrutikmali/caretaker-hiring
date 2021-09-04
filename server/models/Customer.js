@@ -39,6 +39,18 @@ const customerSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
+  pendingRequests: {
+    type: [String],
+    default: [],
+  },
+  currentHires: {
+    type: [String],
+    default: [],
+  },
+  pastHires: {
+    type: [String],
+    default: [],
+  },
 });
 
 const Customer = mongoose.model('Customer', customerSchema);
