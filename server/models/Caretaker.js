@@ -35,7 +35,11 @@ const caretakerSchema = new mongoose.Schema({
   availability: {
     type: String,
     default: 'Available',
-  }
+  },
+  customerPreference: {
+    type: String,
+    default: '',
+  },
 })
 
 const Caretaker = mongoose.model('Caretaker', caretakerSchema);
