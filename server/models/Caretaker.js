@@ -13,7 +13,12 @@ const caretakerSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    trim: true.valueOf,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
   },
   phone: {
     type: String,
