@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Grid, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { signIn as caretakerSignIn } from '../../api/caretaker';
+import { signIn as customerSignIn } from '../../api/customer';
 
 
 const useStyles = makeStyles(() => ({
@@ -49,13 +51,21 @@ const Login = () => {
     history.push('/register');
   }
 
-  const login = () => {
-    console.log(credentials);
-    if(loginType === 'customer') {
-      // Call sign in from customer api
+  const login = async () => {
+    let result;
+    try {
+      if(loginType === 'customer') {
+        result = await customerSignIn(credentials);
+      }
+      else {
+        result = await caretakerSignIn(credentials);
+      }
+      if(result.status === 200) {
+        // Redirect to home
+      }
     }
-    else {
-      // Call sign in from caretaker api
+    catch (error) {
+      console.log(error);
     }
   }
 
