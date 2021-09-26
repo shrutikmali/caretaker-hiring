@@ -1,9 +1,9 @@
 const express = require('express');
-const { signIn } = require('../controllers/caretaker.js');
+const { signIn, signUp } = require('../controllers/caretaker.js');
 
 const router = express.Router();
-router.get('/', (req, res) => res.send("Caretaker").status(200));
 router.post('/signin', signIn);
+router.post('/signup', signUp);
 
 /*
 

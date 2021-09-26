@@ -7,7 +7,7 @@ const customerSchema = new mongoose.Schema({
     trim: true,
   },
   age: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -21,18 +21,18 @@ const customerSchema = new mongoose.Schema({
     trim: true,
   },
   phonePrimary: {
-    type: Number,
+    type: String,
     required: true,
   },
   phoneEmergency: {
-    type: Number,
+    type: String,
     required: true,
   },
   address: {
     type: String,
     required: true,
   },
-  description: {
+  aboutMe: {
     type: String,
     required: true,
   },

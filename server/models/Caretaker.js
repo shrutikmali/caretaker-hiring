@@ -20,6 +20,10 @@ const caretakerSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  address: {
+    type: String,
+    required: true,
+  },
   phone: {
     type: String,
     required: true,
@@ -41,7 +45,7 @@ const caretakerSchema = new mongoose.Schema({
     type: String,
     default: 'Available',
   },
-  customerPreference: {
+  preferredCustomer: {
     type: String,
     default: '',
   },

@@ -1,10 +1,11 @@
-const { findCaretakers, pendingRequests, currentHires, signIn } = require('../controllers/customer.js');
+const { findCaretakers, pendingRequests, currentHires, signIn, signUp } = require('../controllers/customer.js');
 const auth = require('../middleware/auth.js')
 
 const express = require('express');
 
 const router = express.Router();
 router.post('/signin', signIn);
+router.post('/signup', signUp)
 router.use(auth);
 router.get('/', (req, res) => res.send("Customer").status(200));
 router.get('/find', findCaretakers);

@@ -27,18 +27,20 @@ const Login = () => {
     email: '',
     password: '',
   };
-  const [loginType, setLoginType] = useState('customer');
+  const CUSTOMER = 'customer';
+  const CARETAKER = 'caretaker'
+  const [loginType, setLoginType] = useState(CUSTOMER);
   const [credentials, setCredentials] = useState(defaultCredentials);
 
   const classes = useStyles();
   const history = useHistory();
 
   const changeLoginType = () => {
-    if(loginType === 'customer') {
-      setLoginType('caretaker');
+    if(loginType === CUSTOMER) {
+      setLoginType(CARETAKER);
     }
     else {
-      setLoginType('customer');
+      setLoginType(CUSTOMER);
     }
     setCredentials(defaultCredentials);
   }
@@ -52,20 +54,31 @@ const Login = () => {
   }
 
   const login = async () => {
-    let result;
-    try {
-      if(loginType === 'customer') {
-        result = await customerSignIn(credentials);
-      }
-      else {
-        result = await caretakerSignIn(credentials);
-      }
-      if(result.status === 200) {
-        // Redirect to home
-      }
+    if(loginType === CUSTOMER) {
+      await customerSignIn(credentials)
+      .then(res => {
+        if(res.status === 200) {
+          localStorage.setItem('customerToken', res.data.token);
+          localStorage.setItem('customerName', res.data.name);
+          history.push('/customer');
+        }
+      })
+      .catch(err => {
+        console.log(err.response.status);
+      });
     }
-    catch (error) {
-      console.log(error);
+    else {
+      await caretakerSignIn(credentials)
+      .then(res => {
+        if(res.status === 200) {
+          localStorage.setItem('caretakerToken', res.data.token);
+          localStorage.setItem('caretakerName', res.data.name);
+          history.push('/caretaker');
+        }
+      })
+      .catch(err => {
+        console.log(err.response.status);
+      });
     }
   }
 
@@ -73,7 +86,7 @@ const Login = () => {
     <>
       <Grid container justify='center'>
         <Grid item xs={12} align='center'>
-          <h2 className={classes.title}>{loginType === 'customer' ? 'Customer Login' : 'Caretaker Login'}</h2>
+          <h2 className={classes.title}>{loginType === CUSTOMER ? 'Customer Login' : 'Caretaker Login'}</h2>
         </Grid>
         <Grid item xs={12} align='center'>
           <TextField className={classes.input} name='email' variant='outlined' label='Email' type='email' onChange={handleChange}></TextField>
@@ -86,7 +99,7 @@ const Login = () => {
         <Button variant='contained' color='primary' className={classes.button} onClick={login}>Login</Button>
       </Grid>
       <Grid item xs={12} align='center'>
-        <Button color='primary' className={classes.button} style={{width: 'auto', textTransform: 'none'}} onClick={changeLoginType}>{loginType === 'customer' ? 'Caretaker Login' : 'Customer Login'}</Button>
+        <Button color='primary' className={classes.button} style={{width: 'auto', textTransform: 'none'}} onClick={changeLoginType}>{loginType === CUSTOMER ? 'Caretaker Login' : 'Customer Login'}</Button>
       </Grid>
       <Grid item xs={12} align='center'>
         <Button color='primary' className={classes.button} style={{width: 'auto', textTransform: 'none', marginTop: '10px'}} onClick={goToRegister}>Don't have an account? Sign Up</Button>
