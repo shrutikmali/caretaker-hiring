@@ -37,6 +37,10 @@ const caretakerSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  charge: {
+    type: String,
+    default: '0',
+  },
   rating: {
     type: Number,
     default: 0,
@@ -48,6 +52,14 @@ const caretakerSchema = new mongoose.Schema({
   preferredCustomer: {
     type: String,
     default: '',
+  },
+  pendingRequests: {
+    type: [String],
+    default: [],
+  },
+  currentActivities: {
+    type: [String],
+    default: [],
   },
 })
 

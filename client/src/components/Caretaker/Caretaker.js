@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { useHistory } from 'react-router-dom';
+import PendingRequests from './PendingRequests';
 
 const Caretaker = () => {
   const [currentActivities, setCurrentActivities] = useState(true);
@@ -24,6 +25,7 @@ const Caretaker = () => {
   const signOut = () => {
     localStorage.removeItem('caretakerToken');
     localStorage.removeItem('caretakerName');
+    history.push('/login');
   }
 
   return (
@@ -36,6 +38,7 @@ const Caretaker = () => {
       setPendingRequests={setPendingRequests} 
       setPastActivities={setPastActivities} />
       {/* {`${pendingRequests} ${currentActivities} ${pastActivities}`} */}
+      {pendingRequests && <PendingRequests />}
     </>
   );
 }

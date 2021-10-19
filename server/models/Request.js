@@ -1,18 +1,23 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-  customerId: {
+  customerID: {
     type: String,
     required: true,
   },
-  caretakerId: {
+  caretakerID: {
     type: String,
     required: true,
   },
-  time: {
+  startDate: {
     type: String,
+    required: true,
   },
-  description: {
+  endDate: {
+    type: String,
+    required: true,
+  },
+  additionalDetails: {
     type: String,
   },
 });

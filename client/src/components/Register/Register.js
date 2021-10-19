@@ -13,8 +13,8 @@ const useStyles = makeStyles(() => ({
   },
   input: {
     margin: '10px',
-    width: '18%',
-    minWidth: '200px',
+    width: '50%',
+    // minWidth:  '200px',
   },
   button: {
     width: '18%',
@@ -91,41 +91,47 @@ const Register = () => {
       <Grid item xs={12} align='center' className={classes.header}>
         <p>{user === CUSTOMER ? 'Customer' : 'Caretaker'} Registration</p>
       </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' label='Name' name='name' value={details.name} onChange={handleChange} />
+      <Grid item md={2}></Grid>
+      <Grid item container xs={12} md={4}>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' label='Name' name='name' value={details.name} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' label='Age' name='age' value={details.age} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' type='email' label='Email' name='email' value={details.email} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' type='password' label='Password' name='password' value={details.password} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' label='Phone' name='phone' value={details.phone} onChange={handleChange} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' label='Age' name='age' value={details.age} onChange={handleChange} />
+      <Grid item container xs={12} md={4}>
+        {user === CUSTOMER && <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' label='Emergency Phone' name='emergencyPhone' value={details.emergencyPhone} onChange={handleChange} />
+        </Grid>}
+        {user === CARETAKER && <Grid item xs={12} align='center'>
+          <FormControl variant='outlined' style={{width: '18%'}}>
+            <InputLabel id='select-label'>Preferred Customer</InputLabel>
+            <Select label='Preferred Customer' style={{textAlign: 'left'}} labelId='select-label' name='preferredCustomer' value={details.preferredCustomer} onChange={handleChange}>
+              <MenuItem value='any'>Any</MenuItem>
+              <MenuItem value='children'>Children</MenuItem>
+              <MenuItem value='adult'>Adult</MenuItem>
+              <MenuItem value='elderly'>Elderly</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>}
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' multiline rows={5} label='Address' name='address' value={details.address} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' multiline rows={5} label='About Me' name='aboutMe' value={details.aboutMe} onChange={handleChange} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' type='email' label='Email' name='email' value={details.email} onChange={handleChange} />
-      </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' type='password' label='Password' name='password' value={details.password} onChange={handleChange} />
-      </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' label='Phone' name='phone' value={details.phone} onChange={handleChange} />
-      </Grid>
-      {user === CUSTOMER && <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' label='Emergency Phone' name='emergencyPhone' value={details.emergencyPhone} onChange={handleChange} />
-      </Grid>}
-      {user === CARETAKER && <Grid item xs={12} align='center'>
-        <FormControl variant='outlined' style={{width: '18%'}}>
-          <InputLabel id='select-label'>Preferred Customer</InputLabel>
-          <Select label='Preferred Customer' style={{textAlign: 'left'}} labelId='select-label' name='preferredCustomer' value={details.preferredCustomer} onChange={handleChange}>
-            <MenuItem value='any'>Any</MenuItem>
-            <MenuItem value='children'>Children</MenuItem>
-            <MenuItem value='adult'>Adult</MenuItem>
-            <MenuItem value='elderly'>Elderly</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>}
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' multiline rows={5} label='Address' name='address' value={details.address} onChange={handleChange} />
-      </Grid>
-      <Grid item xs={12} align='center'>
-        <TextField className={classes.input} variant='outlined' multiline rows={5} label='About Me' name='aboutMe' value={details.aboutMe} onChange={handleChange} />
-      </Grid>
+      <Grid md={2}></Grid>
       <Grid item xs={12} align='center'>
         <Button variant='contained' color='primary' className={classes.button} onClick={signUp}>Sign Up</Button>
       </Grid>

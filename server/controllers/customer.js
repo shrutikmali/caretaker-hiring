@@ -1,39 +1,8 @@
 const Caretaker = require('../models/Caretaker.js');
 const Customer = require('../models/Customer.js');
+const Request = require('../models/Request.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const findCaretakers = async (req, res) => {
-  try {
-    const careTakers = await Caretaker.find({availability: 'Available'});
-    res.status(200).send(careTakers);
-  }
-  catch (error) {
-    res.status(500).send(error);
-  }
-}
-
-const pendingRequests = async (req, res) => {
-  const { customerID } = req.body;
-  try {
-    const { pendingRequests } = await Customer.findById(customerID);
-    res.status(200).send(pendingRequests);
-  }
-  catch (error) {
-    res.status(500).json(error);
-  }
-}
-
-const currentHires = async (req, res) => {
-  const { customerID } = req.body;
-  try {
-    const { currentHires } = await Customer.findById(customerID);
-    res.status(200).json(currentHires);
-  }
-  catch (error) {
-    res.status(500).json(error);
-  }
-}
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
@@ -71,10 +40,150 @@ const signUp = async (req, res) => {
   }
 }
 
+const findCaretakers = async (req, res) => {
+  try {
+    const caretakers = await Caretaker.find({availability: 'Available'});
+    const result = []
+    for(let i=0;i<caretakers.length;i++) {
+      const toAdd = {
+        id: caretakers[i]._id,
+        name: caretakers[i].name, 
+        age: caretakers[i].age, 
+        aboutMe: caretakers[i].aboutMe,
+        preferredCustomer: caretakers[i].preferredCustomer,
+        availability: caretakers[i].availability,
+      };
+      result.push(toAdd);
+    }
+    res.status(200).json(result);
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+const pendingRequests = async (req, res) => {
+  const customerID = req.id;
+  try {
+    const { pendingRequests } = await Customer.findById(customerID);
+    const pendingList = [];
+    for(let i=0;i<pendingRequests.length;i++) {
+      const request = await Request.findById(pendingRequests[i]);
+      const { name, charge } = await Caretaker.findById(request.caretakerID);
+      pendingList.push({id: request._id, caretakerName: name, charge: charge, startDate: request.startDate, endDate: request.endDate, additionalDetails: request.additionalDetails});
+    }
+    res.status(200).send(pendingList);
+  }
+  catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const currentHires = async (req, res) => {
+  const customerID = req.id;
+  try {
+    const { currentHires } = await Customer.findById(customerID);
+    const hireList = []
+    for(let i=0;i<currentHires.length;i++) {
+      const request = await Request.findById(currentHires[i]);
+      const caretaker = await Caretaker.findById(request.caretakerID);
+      hireList.push({id: currentHires[i], 
+        caretakerName: caretaker.name, 
+        caretakerPhone: caretaker.phone, 
+        startDate: request.startDate, 
+        endDate: request.endDate,
+      });
+    }
+    res.status(200).send(hireList);
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+const sendRequest = async (req, res) => {
+  const customerID = req.id;
+  const { caretakerID, startDate, endDate, additionalDetails } = req.body;
+  try {
+    const newRequest = await Request.create({customerID: customerID, caretakerID: caretakerID, startDate: startDate, endDate: endDate, additionalDetails: additionalDetails});
+    const { pendingRequests: caretakerPendingRequests } = await Caretaker.findById(caretakerID);
+    const newCaretakerPendingRequests = [...caretakerPendingRequests, newRequest._id];
+    await Caretaker.findByIdAndUpdate(caretakerID, {pendingRequests: newCaretakerPendingRequests});
+    const { pendingRequests: customerPendingRequests } = await Customer.findById(customerID);
+    const newCustomerPendingRequests = [...customerPendingRequests, newRequest._id];
+    await Customer.findByIdAndUpdate(customerID, {pendingRequests: newCustomerPendingRequests});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+const cancelRequest = async (req, res) => {
+  const { requestID } = req.body;
+  try {
+    const request = await Request.findById(requestID);
+    const customer = await Customer.findById(request.customerID);
+    const caretaker = await Caretaker.findById(request.caretakerID);
+    const customerPendingRequests = customer.pendingRequests;
+    const newCustomerPendingRequests = customerPendingRequests.filter(request => request !== requestID);
+    await Customer.findByIdAndUpdate(request.customerID, {pendingRequests: newCustomerPendingRequests});
+    const caretakerPendingRequests = caretaker.pendingRequests;
+    const newCaretakerPendingRequests = caretakerPendingRequests.filter(request => request !== requestID);
+    await Caretaker.findByIdAndUpdate(request.caretakerID, {pendingRequests: newCaretakerPendingRequests});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+  res.status(200).send();
+}
+
+const pastHires = async (req, res) => {
+  const customerID = req.id;
+  try {
+    const { pastHires } = await Customer.findById(customerID);
+    const pastList = [];
+    for(let i=0;i<pastHires.length;i++) {
+      const request = await Request.findById(pastHires[i]);
+      pastList.push({id: pastHires[i], startDate: request.startDate, endDate: request.endDate});
+    }
+    res.status(200).send(pastList);
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+const markAsComplete = async (req, res) => {
+  const { requestID } = req.body;
+  const customerID = req.id;
+  try {
+    const { caretakerID } = await Request.findById(requestID);
+    const { currentHires, pastHires } = await Customer.findById(customerID);
+    const { currentActivities } = await Caretaker.findById(caretakerID);
+    const newCurrentHires = currentHires.filter(current => current !== requestID);
+    const newPastHires = [...pastHires, requestID];
+    await Customer.findByIdAndUpdate(customerID, {pastHires: newPastHires});
+    await Customer.findByIdAndUpdate(customerID, {currentHires: newCurrentHires});
+    const newCurrentActivities = currentActivities.filter(activity => activity !== requestID);
+    await Caretaker.findByIdAndUpdate(caretakerID, {currentActivities: newCurrentActivities});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
 module.exports = { 
   findCaretakers, 
   pendingRequests, 
   currentHires,
+  sendRequest,
   signIn,
   signUp,
+  cancelRequest,
+  currentHires,
+  pastHires,
+  markAsComplete,
 };

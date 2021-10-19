@@ -1,4 +1,4 @@
-const { findCaretakers, pendingRequests, currentHires, signIn, signUp } = require('../controllers/customer.js');
+const { findCaretakers, pendingRequests, sendRequest, signIn, signUp, cancelRequest, currentHires, pastHires, markAsComplete } = require('../controllers/customer.js');
 const auth = require('../middleware/auth.js')
 
 const express = require('express');
@@ -6,11 +6,15 @@ const express = require('express');
 const router = express.Router();
 router.post('/signin', signIn);
 router.post('/signup', signUp)
-router.use(auth);
 router.get('/', (req, res) => res.send("Customer").status(200));
 router.get('/find', findCaretakers);
-router.get('/pending', pendingRequests);
+router.use(auth);
+router.post('/request', sendRequest);
+router.post('/pending', pendingRequests);
+router.post('/cancel', cancelRequest);
 router.get('/current', currentHires);
+router.get('/past', pastHires);
+router.post('/complete', markAsComplete);
 /*
 
 1. Find caretakers (GET)
