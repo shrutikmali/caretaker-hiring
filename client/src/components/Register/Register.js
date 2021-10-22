@@ -41,6 +41,7 @@ const Register = () => {
     aboutMe: '',
   };
   const [details, setDetails] = useState(defaultDetails);
+  const [photo, setPhoto] = useState();
   const history = useHistory();
 
   const changeUserType = () => {
@@ -55,6 +56,11 @@ const Register = () => {
 
   const handleChange = (e) => {
     setDetails({...details, [e.target.name]: e.target.value});
+    console.log(details);
+  }
+
+  const handleUpload = (e) => {
+    setPhoto(e.target.files[0]);
   }
 
   const signUp = async () => {
@@ -129,6 +135,9 @@ const Register = () => {
         </Grid>
         <Grid item xs={12} align='center'>
           <TextField className={classes.input} variant='outlined' multiline rows={5} label='About Me' name='aboutMe' value={details.aboutMe} onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} align='center'>
+          Upload image: <input type='file' accept=".jpg, .png" name="photo" value={details.photo} onChange={handleUpload} />
         </Grid>
       </Grid>
       <Grid md={2}></Grid>

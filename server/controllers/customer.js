@@ -1,6 +1,7 @@
 const Caretaker = require('../models/Caretaker.js');
 const Customer = require('../models/Customer.js');
 const Request = require('../models/Request.js');
+const Feedback = require('../models/Feedback.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -146,7 +147,8 @@ const pastHires = async (req, res) => {
     const pastList = [];
     for(let i=0;i<pastHires.length;i++) {
       const request = await Request.findById(pastHires[i]);
-      pastList.push({id: pastHires[i], startDate: request.startDate, endDate: request.endDate});
+      const { name } = await Caretaker.findById(request.caretakerID);
+      pastList.push({id: pastHires[i], caretakerName: name, startDate: request.startDate, endDate: request.endDate, feedback: request.feedbackSent});
     }
     res.status(200).send(pastList);
   }
@@ -175,6 +177,40 @@ const markAsComplete = async (req, res) => {
   }
 }
 
+const sendFeedback = async (req, res) => {
+  const customerID = req.id;
+  const { requestID, rating, feedback } = req.body;
+  try {
+    const request = await Request.findById(requestID);
+    const customer = await Customer.findById(customerID);
+    const caretaker = await Caretaker.findById(request.caretakerID);
+    const result = await Feedback.create({
+      customerID: customerID, 
+      caretakerID: request.caretakerID, 
+      customerName: customer.name, 
+      startDate: request.startDate, 
+      endDate: request.endDate, 
+      rating: rating,
+      feedback: feedback,
+    });
+    const caretakerFeedbackList = caretaker.feedbackList;
+    console.log()
+    const newCaretakerFeedbackList = [...caretakerFeedbackList, result._id];
+    const totalScore = caretaker.totalScore;
+    const newTotalScore = totalScore + rating;
+    let newRating = newTotalScore / newCaretakerFeedbackList.length;
+    newRating = newRating.toFixed(1);
+    await Caretaker.findByIdAndUpdate(request.caretakerID, {feedbackList: newCaretakerFeedbackList});
+    await Caretaker.findByIdAndUpdate(request.caretakerID, {totalScore: newTotalScore});
+    await Caretaker.findByIdAndUpdate(request.caretakerID, {rating: newRating});
+    await Request.findByIdAndUpdate(requestID, {feedbackSent: true});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
 module.exports = { 
   findCaretakers, 
   pendingRequests, 
@@ -186,4 +222,5 @@ module.exports = {
   currentHires,
   pastHires,
   markAsComplete,
+  sendFeedback,
 };

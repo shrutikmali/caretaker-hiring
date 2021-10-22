@@ -20,6 +20,10 @@ const requestSchema = new mongoose.Schema({
   additionalDetails: {
     type: String,
   },
+  feedbackSent: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Request = mongoose.model('Request', requestSchema);

@@ -45,6 +45,10 @@ const caretakerSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  totalScore: {
+    type: Number,
+    default: 0,
+  },
   availability: {
     type: String,
     default: 'Available',
@@ -58,6 +62,10 @@ const caretakerSchema = new mongoose.Schema({
     default: [],
   },
   currentActivities: {
+    type: [String],
+    default: [],
+  },
+  feedbackList: {
     type: [String],
     default: [],
   },

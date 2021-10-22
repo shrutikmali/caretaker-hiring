@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Button } from '@material-ui/core';
+import { AppBar, Box, Button, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -12,7 +12,10 @@ const useStyles = makeStyles(() => ({
     padding: '0px 20px',
   },
   navLeft: {
-
+    width: '130px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   navRight: {
     paddingRight: '10px',
@@ -22,7 +25,12 @@ const useStyles = makeStyles(() => ({
     textTransform: 'none',
     color: 'white',
   },
-}))
+  imageStyle: {
+    height: '50px',
+    width: '50px',
+    borderRadius: '50px',
+  },
+}));
 
 const NavBar = ({ 
   name,
@@ -72,6 +80,7 @@ const NavBar = ({
     <Box xs={{flexGrow: 1}}>
       <AppBar position='static' className={classes.navbarContainer}>
         <div className={classes.navLeft}>
+          <Avatar />
           <p>{name}</p>
         </div>
         <div className={classes.navRight}>

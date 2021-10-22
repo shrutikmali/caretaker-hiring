@@ -11,3 +11,4 @@ export const cancelRequest = (requestID, token) => axios.post(`${URL}/cancel`, {
 export const currentHires = (token) => axios.get(`${URL}/current`, {headers: {auth: `Bearer ${token}`}});
 export const pastHires = (token) => axios.get(`${URL}/past`, {headers: {auth: `Bearer ${token}`}});
 export const markAsComplete = (token, requestID) => axios.post(`${URL}/complete`, {requestID: requestID}, {headers: {auth: `Bearer ${token}`}});
+export const sendFeedback = (token, requestID, feedbackDetails) => axios.post(`${URL}/feedback`, {requestID: requestID, rating: feedbackDetails.rating, feedback: feedbackDetails.feedback}, {headers: {auth: `Bearer ${token}`}});
