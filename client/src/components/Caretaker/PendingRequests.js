@@ -5,7 +5,7 @@ import { getPendingRequests, acceptRequest as accept, declineRequest as decline 
 
 const PendingRequests = () => {
   const [pendingList, setPendingList] = useState([]);
-
+  
   useEffect(() => {
     const token = localStorage.getItem('caretakerToken');
     const fetchPendingRequests = async (token) => {
@@ -43,7 +43,8 @@ const PendingRequests = () => {
   }
 
   return (
-    <Grid container spacing={2} align='center'>
+    <Grid container spacing={2} style={{marginTop: '10px'}} align='center'>
+      {pendingList.length === 0 && <Grid item xs={12}>No pending requests</Grid>}
       {pendingList.map(request => (
         <Grid key={request.id} item xs={12} md={3}>
           <PendingRequestCard 

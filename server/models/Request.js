@@ -24,6 +24,10 @@ const requestSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  feedbackID: {
+    type: String,
+    default: '',
+  },
 });
 
 const Request = mongoose.model('Request', requestSchema);

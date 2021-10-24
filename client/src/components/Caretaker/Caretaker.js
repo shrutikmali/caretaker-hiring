@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { useHistory } from 'react-router-dom';
 import PendingRequests from './PendingRequests';
+import CurrentActivities from './CurrentActivites';
+import PastActivities from './PastActivities';
 
 const Caretaker = () => {
   const [currentActivities, setCurrentActivities] = useState(true);
@@ -39,6 +41,8 @@ const Caretaker = () => {
       setPastActivities={setPastActivities} />
       {/* {`${pendingRequests} ${currentActivities} ${pastActivities}`} */}
       {pendingRequests && <PendingRequests />}
+      {currentActivities && <CurrentActivities />}
+      {pastActivities && <PastActivities />}
     </>
   );
 }

@@ -25,14 +25,14 @@ const signIn = async (req, res) => {
 }
 
 const signUp = async (req, res) => {
-  const { name, age, email, password, address, phone, emergencyPhone, aboutMe } = req.body;
+  const { name, age, email, password, address, phone, emergencyPhone, aboutMe, photo } = req.body;
   try {
     const userExists = await Customer.findOne({email: email});
     if(userExists) {
       res.status(409).send("Duplicate email");
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    const newCustomer = await Customer.create({name: name, age: age, email: email, password: hashedPassword, address: address, phonePrimary: phone, phoneEmergency: emergencyPhone, aboutMe: aboutMe});
+    const newCustomer = await Customer.create({name: name, age: age, email: email, password: hashedPassword, address: address, phonePrimary: phone, phoneEmergency: emergencyPhone, aboutMe: aboutMe, photo: photo});
     const token = jwt.sign({id: newCustomer._id, name: newCustomer.name}, 'salt');
     res.status(200).json({name: newCustomer.name, token: token});
   }
@@ -163,13 +163,15 @@ const markAsComplete = async (req, res) => {
   try {
     const { caretakerID } = await Request.findById(requestID);
     const { currentHires, pastHires } = await Customer.findById(customerID);
-    const { currentActivities } = await Caretaker.findById(caretakerID);
+    const { currentActivities, pastActivities } = await Caretaker.findById(caretakerID);
     const newCurrentHires = currentHires.filter(current => current !== requestID);
     const newPastHires = [...pastHires, requestID];
     await Customer.findByIdAndUpdate(customerID, {pastHires: newPastHires});
     await Customer.findByIdAndUpdate(customerID, {currentHires: newCurrentHires});
     const newCurrentActivities = currentActivities.filter(activity => activity !== requestID);
+    const newPastActivities = [...pastActivities, requestID];
     await Caretaker.findByIdAndUpdate(caretakerID, {currentActivities: newCurrentActivities});
+    await Caretaker.findByIdAndUpdate(caretakerID, {pastActivities: newPastActivities});
     res.status(200).send("Success");
   }
   catch (error) {
@@ -194,7 +196,6 @@ const sendFeedback = async (req, res) => {
       feedback: feedback,
     });
     const caretakerFeedbackList = caretaker.feedbackList;
-    console.log()
     const newCaretakerFeedbackList = [...caretakerFeedbackList, result._id];
     const totalScore = caretaker.totalScore;
     const newTotalScore = totalScore + rating;
@@ -204,6 +205,7 @@ const sendFeedback = async (req, res) => {
     await Caretaker.findByIdAndUpdate(request.caretakerID, {totalScore: newTotalScore});
     await Caretaker.findByIdAndUpdate(request.caretakerID, {rating: newRating});
     await Request.findByIdAndUpdate(requestID, {feedbackSent: true});
+    await Request.findByIdAndUpdate(requestID, {feedbackID: result._id});
     res.status(200).send("Success");
   }
   catch (error) {

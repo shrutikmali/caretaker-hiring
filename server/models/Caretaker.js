@@ -65,6 +65,10 @@ const caretakerSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  pastActivities: {
+    type: [String],
+    default: [],
+  },
   feedbackList: {
     type: [String],
     default: [],

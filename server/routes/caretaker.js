@@ -1,12 +1,14 @@
 const express = require('express');
-const { signIn, signUp, pendingRequests, acceptRequest, declineRequest } = require('../controllers/caretaker.js');
+const { signIn, signUp, currentActivities, pendingRequests, getPastActivities, acceptRequest, declineRequest } = require('../controllers/caretaker.js');
 const auth = require('../middleware/auth.js');
 
 const router = express.Router();
 router.post('/signin', signIn);
 router.post('/signup', signUp);
 router.use(auth);
+router.get('/current', currentActivities);
 router.post('/pending', pendingRequests);
+router.get('/past', getPastActivities);
 router.post('/accept', acceptRequest);
 router.post('/decline', declineRequest);
 /*

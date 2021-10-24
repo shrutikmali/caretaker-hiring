@@ -1,6 +1,7 @@
 const Caretaker = require('../models/Caretaker.js');
 const Customer = require('../models/Customer.js');
 const Request = require('../models/Request.js');
+const Feedback = require('../models/Feedback.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -107,10 +108,70 @@ const declineRequest = async (req, res) => {
   res.status(200).send("Success");
 }
 
+const currentActivities = async (req, res) => {
+  const caretakerID = req.id;
+  try {
+    const { currentActivities } = await Caretaker.findById(caretakerID);
+    const activities = [];
+    for(let i=0;i<currentActivities.length;i++) {
+      const request = await Request.findById(currentActivities[i]);
+      const customer = await Customer.findById(request.customerID);
+      activities.push({
+        id: request._id,
+        customerName: customer.name, 
+        age: customer.age, 
+        primaryPhone: customer.phonePrimary, 
+        secondaryPhone: customer.phoneEmergency,
+        address: customer.address,
+        photo: customer.photo,
+        startDate: request.startDate,
+        endDate: request.endDate,
+        additionalDetails: request.additionalDetails,
+      });
+    }
+    res.status(200).json({message: "Success", activites: activities});
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+const getPastActivities = async (req, res) => {
+  const caretakerID = req.id;
+  try {
+    const { pastActivities } = await Caretaker.findById(caretakerID);
+    const pastList = [];
+    for(let i=0;i<pastActivities.length;i++) {
+      const past = {};
+      const request = await Request.findById(pastActivities[i]);
+      const { name, photo } = await Customer.findById(request.customerID);
+      past.id = request._id;
+      past.customerName = name;
+      past.startDate = request.startDate;
+      past.endDate = request.endDate;
+      past.rating = null;
+      past.feedback = null;
+      past.photo = photo;
+      if(request.feedbackSent) {
+        const feedback = await Feedback.findById(request.feedbackID);
+        past.rating = feedback.rating;
+        past.feedback = feedback.feedback;
+      }
+      pastList.push(past);
+    }
+    res.status(200).json({message: "Success", pastList: pastList})
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
 module.exports = {
   signIn,
   signUp,
   pendingRequests,
   acceptRequest,
   declineRequest,
+  currentActivities,
+  getPastActivities,
 };

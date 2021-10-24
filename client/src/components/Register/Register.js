@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { signUp as customerSignUp } from '../../api/customer';
 import { signUp as caretakerSignUp } from '../../api/caretaker';
 import { useHistory } from 'react-router-dom';
+import FileBase from 'react-file-base64';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -39,9 +40,9 @@ const Register = () => {
     emergencyPhone: '',
     preferredCustomer: '',
     aboutMe: '',
+    photo: '',
   };
   const [details, setDetails] = useState(defaultDetails);
-  const [photo, setPhoto] = useState();
   const history = useHistory();
 
   const changeUserType = () => {
@@ -56,12 +57,8 @@ const Register = () => {
 
   const handleChange = (e) => {
     setDetails({...details, [e.target.name]: e.target.value});
-    console.log(details);
   }
 
-  const handleUpload = (e) => {
-    setPhoto(e.target.files[0]);
-  }
 
   const signUp = async () => {
     if(user === CUSTOMER) {
@@ -70,6 +67,7 @@ const Register = () => {
         if(res.status === 200) {
           localStorage.setItem('customerToken', res.data.token);
           localStorage.setItem('customerName', res.data.name);
+          localStorage.setItem('customerPhoto', details.photo);
           history.push('/customer');
         }
       })
@@ -137,7 +135,7 @@ const Register = () => {
           <TextField className={classes.input} variant='outlined' multiline rows={5} label='About Me' name='aboutMe' value={details.aboutMe} onChange={handleChange} />
         </Grid>
         <Grid item xs={12} align='center'>
-          Upload image: <input type='file' accept=".jpg, .png" name="photo" value={details.photo} onChange={handleUpload} />
+          Upload image: <FileBase type="file" multiple={false} onDone={({base64}) => setDetails({...details, selectedFile: base64})}/>
         </Grid>
       </Grid>
       <Grid md={2}></Grid>

@@ -9,6 +9,10 @@ const feedbackSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  requestID: {
+    type: String,
+    required: true,
+  },
   customerName: {
     type: String,
     required: true,

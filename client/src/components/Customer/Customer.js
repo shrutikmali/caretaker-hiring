@@ -12,6 +12,7 @@ const Customer = () => {
   const [pendingRequests, setPendingRequests] = useState(false);
   const [findCaretakers, setFindCaretakers] = useState(true);
   const [token, setToken] = useState('');
+  const [photo, setPhoto] = useState('');
   const [name, setName] = useState('Name');
   const userType = 'customer';
   const history = useHistory();
@@ -24,6 +25,7 @@ const Customer = () => {
     }
     setToken(temp);
     setName(localStorage.getItem('customerName'));
+    setPhoto(localStorage.getItem('customerPhoto'));
   }, []);
 
   const signOut = () => {
@@ -41,7 +43,8 @@ const Customer = () => {
       setCurrentHires={setCurrentHires} 
       setPastHires={setPastHires}
       setPendingRequests={setPendingRequests}
-      setFindCaretakers={setFindCaretakers}/>
+      setFindCaretakers={setFindCaretakers} 
+      photo={photo} />
       {/* {`${currentHires} ${pastHires} ${pendingRequests} ${findCaretakers}`} */}
       {findCaretakers && <FindCaretakers />}
       {pendingRequests && <PendingRequests />}

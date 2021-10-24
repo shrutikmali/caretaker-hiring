@@ -41,8 +41,10 @@ const NavBar = ({
   setFindCaretakers,
   setCurrentActivities,
   setPastActivities,
+  photo,
   }) => {
   const classes = useStyles();
+
 
   const changeList = (str) => {
     setPastHires && setPastHires(false);
@@ -80,7 +82,7 @@ const NavBar = ({
     <Box xs={{flexGrow: 1}}>
       <AppBar position='static' className={classes.navbarContainer}>
         <div className={classes.navLeft}>
-          <Avatar />
+          <Avatar src={photo} alt="Photo" sx={{ width: 56, height: 56 }}/>
           <p>{name}</p>
         </div>
         <div className={classes.navRight}>
