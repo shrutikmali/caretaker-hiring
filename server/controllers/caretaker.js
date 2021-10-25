@@ -17,7 +17,7 @@ const signIn = async (req, res) => {
       throw new Error('Incorrect password');
     }
     const token = jwt.sign({id: existingCaretaker._id, name: existingCaretaker.name}, 'salt');
-    res.status(200).json({message: 'success', token: token, name: existingCaretaker.name});
+    res.status(200).json({message: 'success', token: token, name: existingCaretaker.name, photo: existingCaretaker.photo});
   }
   catch (error) {
     res.status(404).json({message: error.message});
@@ -166,6 +166,40 @@ const getPastActivities = async (req, res) => {
   }
 }
 
+const caretakerDetails = async (req, res) => {
+  const caretakerID = req.id;
+  try {
+    const { name, age, address, phone, photo, aboutMe, availability, preferredCustomer, rating } = await Caretaker.findById(caretakerID);
+    const details = {
+      name,
+      age,
+      address,
+      phone,
+      photo,
+      aboutMe,
+      availability,
+      preferredCustomer,
+      rating,
+    }
+    res.status(200).json({message: "Success", details: details});
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+const updateDetails = async (req, res) => {
+  const caretakerID = req.id;
+  const details = req.body.details;
+  try {
+    await Caretaker.findByIdAndUpdate(caretakerID, {...details});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
 module.exports = {
   signIn,
   signUp,
@@ -174,4 +208,6 @@ module.exports = {
   declineRequest,
   currentActivities,
   getPastActivities,
+  caretakerDetails,
+  updateDetails,
 };

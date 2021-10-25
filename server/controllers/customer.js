@@ -17,7 +17,7 @@ const signIn = async (req, res) => {
       throw new Error('Incorrect password');
     }
     const token = jwt.sign({id: existingCustomer._id, name: existingCustomer.name}, 'salt');
-    res.status(200).json({message: 'success', token: token, name: existingCustomer.name});
+    res.status(200).json({message: 'success', token: token, name: existingCustomer.name, photo: existingCustomer.photo});
   }
   catch (error) {
     res.status(404).json({message: error.message});
@@ -189,6 +189,7 @@ const sendFeedback = async (req, res) => {
     const result = await Feedback.create({
       customerID: customerID, 
       caretakerID: request.caretakerID, 
+      requestID: requestID,
       customerName: customer.name, 
       startDate: request.startDate, 
       endDate: request.endDate, 
@@ -213,6 +214,38 @@ const sendFeedback = async (req, res) => {
   }
 }
 
+const customerDetails = async (req, res) => {
+  const customerID = req.id;
+  try {
+    const { name, age, phonePrimary, phoneEmergency, address, aboutMe, photo } = await Customer.findById(customerID);
+    const details = {
+      name,
+      age,
+      phonePrimary,
+      phoneEmergency,
+      address,
+      aboutMe,
+      photo,
+    };
+    res.status(200).json({message: "Success", details: details});
+  }
+  catch(error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
+const updateCustomerDetails = async (req, res) => {
+  const customerID = req.id;
+  const newCustomerDetails = req.body.details;
+  try {
+    await Customer.findByIdAndUpdate(customerID, {...newCustomerDetails});
+    res.status(200).send("Success");
+  }
+  catch (error) {
+    res.status(500).json({message: "Error.message"});
+  }
+}
+
 module.exports = { 
   findCaretakers, 
   pendingRequests, 
@@ -225,4 +258,6 @@ module.exports = {
   pastHires,
   markAsComplete,
   sendFeedback,
+  customerDetails,
+  updateCustomerDetails,
 };

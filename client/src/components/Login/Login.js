@@ -60,6 +60,7 @@ const Login = () => {
         if(res.status === 200) {
           localStorage.setItem('customerToken', res.data.token);
           localStorage.setItem('customerName', res.data.name);
+          localStorage.setItem('customerPhoto', res.data.photo);
           history.push('/customer');
         }
       })
@@ -73,6 +74,7 @@ const Login = () => {
         if(res.status === 200) {
           localStorage.setItem('caretakerToken', res.data.token);
           localStorage.setItem('caretakerName', res.data.name);
+          localStorage.setItem('caretakerPhoto', res.data.photo);
           history.push('/caretaker');
         }
       })

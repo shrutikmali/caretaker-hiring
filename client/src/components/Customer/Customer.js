@@ -5,12 +5,14 @@ import FindCaretakers from './FindCaretakers';
 import PendingRequests from './PendingRequests';
 import CurrentHires from './CurrentHires';
 import PastHires from './PastHires';
+import Profile from '../Profile/Profile';
 
 const Customer = () => {
   const [currentHires, setCurrentHires] = useState(false);
   const [pastHires, setPastHires] = useState(false);
   const [pendingRequests, setPendingRequests] = useState(false);
   const [findCaretakers, setFindCaretakers] = useState(true);
+  const [showProfile, setShowProfile] = useState(false);
   const [token, setToken] = useState('');
   const [photo, setPhoto] = useState('');
   const [name, setName] = useState('Name');
@@ -44,12 +46,14 @@ const Customer = () => {
       setPastHires={setPastHires}
       setPendingRequests={setPendingRequests}
       setFindCaretakers={setFindCaretakers} 
-      photo={photo} />
+      photo={photo} 
+      setShowProfile={setShowProfile} />
       {/* {`${currentHires} ${pastHires} ${pendingRequests} ${findCaretakers}`} */}
       {findCaretakers && <FindCaretakers />}
       {pendingRequests && <PendingRequests />}
       {currentHires && <CurrentHires />}
       {pastHires && <PastHires />}
+      {showProfile && <Profile type="customer" />}
     </>
   );
 }

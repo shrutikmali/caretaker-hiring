@@ -1,5 +1,5 @@
 const express = require('express');
-const { signIn, signUp, currentActivities, pendingRequests, getPastActivities, acceptRequest, declineRequest } = require('../controllers/caretaker.js');
+const { signIn, signUp, currentActivities, pendingRequests, getPastActivities, acceptRequest, declineRequest, caretakerDetails, updateDetails } = require('../controllers/caretaker.js');
 const auth = require('../middleware/auth.js');
 
 const router = express.Router();
@@ -11,6 +11,8 @@ router.post('/pending', pendingRequests);
 router.get('/past', getPastActivities);
 router.post('/accept', acceptRequest);
 router.post('/decline', declineRequest);
+router.get('/details', caretakerDetails);
+router.post('/update', updateDetails);
 /*
 
 1. Sign in / Sign up (POST)

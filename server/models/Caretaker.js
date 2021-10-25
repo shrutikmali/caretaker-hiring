@@ -31,6 +31,7 @@ const caretakerSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+    default: '',
   },
   aboutMe: {
     type: String,
@@ -55,7 +56,7 @@ const caretakerSchema = new mongoose.Schema({
   },
   preferredCustomer: {
     type: String,
-    default: '',
+    default: 'any',
   },
   pendingRequests: {
     type: [String],

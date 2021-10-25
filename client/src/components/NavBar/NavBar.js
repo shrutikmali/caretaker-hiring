@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Button, Avatar } from '@material-ui/core';
+import { AppBar, Box, Button, Avatar, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
     padding: '0px 20px',
   },
   navLeft: {
-    width: '130px',
+    minWidth: '100px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -42,6 +42,7 @@ const NavBar = ({
   setCurrentActivities,
   setPastActivities,
   photo,
+  setShowProfile,
   }) => {
   const classes = useStyles();
 
@@ -53,6 +54,7 @@ const NavBar = ({
     setFindCaretakers && setFindCaretakers(false);
     setCurrentActivities && setCurrentActivities(false);
     setPastActivities && setPastActivities(false);
+    setShowProfile && setShowProfile(false);
     switch(str) {
       case "currentHires":
         setCurrentHires && setCurrentHires(true);
@@ -72,6 +74,9 @@ const NavBar = ({
       case "pastActivities":
         setPastActivities && setPastActivities(true);
         break;
+      case "profile":
+        setShowProfile && setShowProfile(true);
+        break;
       default:
         break;
     }
@@ -82,8 +87,10 @@ const NavBar = ({
     <Box xs={{flexGrow: 1}}>
       <AppBar position='static' className={classes.navbarContainer}>
         <div className={classes.navLeft}>
-          <Avatar src={photo} alt="Photo" sx={{ width: 56, height: 56 }}/>
-          <p>{name}</p>
+          <IconButton onClick={() => changeList("profile")}>
+            <Avatar src={photo} alt="Photo" sx={{ width: 56, height: 56 }}/>
+          </IconButton>
+          <p onClick={() => changeList("profile")} style={{cursor: 'pointer',}}>{name}</p>
         </div>
         <div className={classes.navRight}>
           {setCurrentHires && <Button className={classes.button} onClick={() => changeList("currentHires")}>Current Hires</Button>}

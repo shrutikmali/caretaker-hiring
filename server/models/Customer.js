@@ -37,6 +37,7 @@ const customerSchema = new mongoose.Schema({
     required: true,
   },
   photo: {
+    default: '',
     type: String,
   },
   pendingRequests: {

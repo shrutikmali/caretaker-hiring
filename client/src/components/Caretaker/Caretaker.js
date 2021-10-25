@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import PendingRequests from './PendingRequests';
 import CurrentActivities from './CurrentActivites';
 import PastActivities from './PastActivities';
+import Profile from '../Profile/Profile';
 
 const Caretaker = () => {
   const [currentActivities, setCurrentActivities] = useState(true);
@@ -11,6 +12,8 @@ const Caretaker = () => {
   const [pastActivities, setPastActivities] = useState(false);
   const [token, setToken] = useState('');
   const [name, setName] = useState('Name');
+  const [photo, setPhoto] = useState("");
+  const [showProfile, setShowProfile] = useState(false);
   const userType = 'caretaker';
   const history = useHistory();
 
@@ -22,6 +25,7 @@ const Caretaker = () => {
     }
     setToken(temp);
     setName(localStorage.getItem('caretakerName'));
+    setPhoto(localStorage.getItem("caretakerPhoto"));
   }, []);
 
   const signOut = () => {
@@ -38,11 +42,14 @@ const Caretaker = () => {
       userType={userType} 
       setCurrentActivities={setCurrentActivities} 
       setPendingRequests={setPendingRequests} 
-      setPastActivities={setPastActivities} />
+      setPastActivities={setPastActivities} 
+      setShowProfile={setShowProfile} 
+      photo={photo} />
       {/* {`${pendingRequests} ${currentActivities} ${pastActivities}`} */}
       {pendingRequests && <PendingRequests />}
       {currentActivities && <CurrentActivities />}
       {pastActivities && <PastActivities />}
+      {showProfile && <Profile type="caretaker" />}
     </>
   );
 }

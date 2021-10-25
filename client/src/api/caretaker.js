@@ -9,3 +9,5 @@ export const acceptRequest = (token, requestID) => axios.post(`${URL}/accept`, {
 export const declineRequest = (token, requestID) => axios.post(`${URL}/decline`, {requestID}, {headers: {auth: `Bearer ${token}`}});
 export const currentActivities = (token) => axios.get(`${URL}/current`, {headers: {auth: `Bearer ${token}`}});
 export const pastActivities = (token) => axios.get(`${URL}/past`, {headers: {auth: `Bearer ${token}`}});
+export const caretakerDetails = (token) => axios.get(`${URL}/details`, {headers: {auth: `Bearer ${token}`}});
+export const updateCaretakerDetails = (token, details) => axios.post(`${URL}/update`, {details}, {headers: {auth: `Bearer ${token}`}});
