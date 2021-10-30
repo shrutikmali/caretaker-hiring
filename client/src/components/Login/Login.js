@@ -65,6 +65,7 @@ const Login = () => {
         }
       })
       .catch(err => {
+        alert("Incorrect credentials");
         console.log(err.response.status);
       });
     }
@@ -79,6 +80,7 @@ const Login = () => {
         }
       })
       .catch(err => {
+        alert("Incorrect credentials");
         console.log(err.response.status);
       });
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Grid, Button, Typography } from '@material-ui/core';
+import { Paper, Grid, Button, Typography, Avatar } from '@material-ui/core';
 import RequestDetails from './RequestDetails';
 import { sendRequest as sendRequestAPI } from '../../api/customer';
 
@@ -10,7 +10,7 @@ const paperStyle = {
   padding: '10px',
 };
 
-const SendRequest = ({ name, aboutMe, id, preferredCustomer }) => {
+const SendRequest = ({ name, aboutMe, id, preferredCustomer, rating, charge, photo }) => {
   const [showRequestDetails, setShowRequestDetails] = useState(false);
   const [requestDetails, setRequestDetails] = useState({
     caretakerID: id,
@@ -44,19 +44,19 @@ const SendRequest = ({ name, aboutMe, id, preferredCustomer }) => {
       <Paper style={paperStyle}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <img src='https://cdn-icons-png.flaticon.com/512/1946/1946429.png' height='40px' />
+            <Avatar src={photo} />
           </Grid>
           <Grid item xs={8} align='left' style={{paddingTop: '20px'}}>
             {name}
           </Grid>
           <Grid item xs={12} align='left' style={{marginTop: '30px'}}>
-            Rate: 
+            Rate: {charge} / hr
           </Grid>
           <Grid item xs={12} align='left'>
-            Rating:  
+            Rating: {rating}
           </Grid>
           <Grid item xs={12} align='left'>
-            Preferred Customer: {preferredCustomer}
+            Preferred Customer: {preferredCustomer.charAt(0).toUpperCase().concat(preferredCustomer.slice(1))}
           </Grid>
           <Grid item xs={12} align='left'>
             <Typography variant='caption'>{aboutMe}</Typography>

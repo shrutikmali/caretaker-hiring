@@ -43,16 +43,19 @@ const signUp = async (req, res) => {
 
 const findCaretakers = async (req, res) => {
   try {
-    const caretakers = await Caretaker.find({availability: 'Available'});
+    const caretakers = await Caretaker.find({availability: 'available'});
     const result = []
     for(let i=0;i<caretakers.length;i++) {
       const toAdd = {
         id: caretakers[i]._id,
         name: caretakers[i].name, 
         age: caretakers[i].age, 
+        rating: caretakers[i].rating,
+        charge: caretakers[i].charge,
         aboutMe: caretakers[i].aboutMe,
         preferredCustomer: caretakers[i].preferredCustomer,
-        availability: caretakers[i].availability,
+        availability: caretakers[i].availability, 
+        photo: caretakers[i].photo,
       };
       result.push(toAdd);
     }
@@ -147,8 +150,9 @@ const pastHires = async (req, res) => {
     const pastList = [];
     for(let i=0;i<pastHires.length;i++) {
       const request = await Request.findById(pastHires[i]);
+      const { photo } = await Caretaker.findById(request.caretakerID);
       const { name } = await Caretaker.findById(request.caretakerID);
-      pastList.push({id: pastHires[i], caretakerName: name, startDate: request.startDate, endDate: request.endDate, feedback: request.feedbackSent});
+      pastList.push({id: pastHires[i], caretakerName: name, startDate: request.startDate, endDate: request.endDate, feedback: request.feedbackSent, photo: photo});
     }
     res.status(200).send(pastList);
   }

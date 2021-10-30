@@ -158,12 +158,3 @@ const Profile = ({ type }) => {
 }
 
 export default Profile;
-
-
-// aboutMe: "asdadasd" (x)
-// address: "adsasdasd" (x)
-// age: "123" (x) 
-// name: "Test Name" (x)
-// phoneEmergency: "123131323" (x)
-// phonePrimary: "1231312" (x)
-// photo: "" (x)

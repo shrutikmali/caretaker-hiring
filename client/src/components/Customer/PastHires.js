@@ -33,7 +33,8 @@ const PastHires = () => {
           caretakerName={past.caretakerName} 
           startDate={past.startDate} 
           endDate={past.endDate} 
-          feedback={past.feedback} />
+          feedback={past.feedback} 
+          photo={past.photo} />
         </Grid>
       ))}
     </Grid>

@@ -30,7 +30,10 @@ const FindCaretakers = () => {
           name={caretaker.name} 
           aboutMe={caretaker.aboutMe} 
           availability={caretaker.availability} 
-          preferredCustomer={caretaker.preferredCustomer}/>
+          preferredCustomer={caretaker.preferredCustomer} 
+          rating={caretaker.rating} 
+          charge={caretaker.charge}
+          photo={caretaker.photo} />
         </Grid>
       ))}
     </Grid>

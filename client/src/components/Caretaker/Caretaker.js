@@ -40,6 +40,9 @@ const Caretaker = () => {
       name={name} 
       signOut={signOut} 
       userType={userType} 
+      currentActivities={currentActivities} 
+      pendingRequests={pendingRequests} 
+      pastActivities={pastActivities} 
       setCurrentActivities={setCurrentActivities} 
       setPendingRequests={setPendingRequests} 
       setPastActivities={setPastActivities} 

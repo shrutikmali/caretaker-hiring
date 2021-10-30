@@ -43,6 +43,12 @@ const NavBar = ({
   setPastActivities,
   photo,
   setShowProfile,
+  currentHires,
+  pastHires,
+  pendingRequests,
+  findCaretakers,
+  currentActivities,
+  pastActivities,
   }) => {
   const classes = useStyles();
 
@@ -93,12 +99,12 @@ const NavBar = ({
           <p onClick={() => changeList("profile")} style={{cursor: 'pointer',}}>{name}</p>
         </div>
         <div className={classes.navRight}>
-          {setCurrentHires && <Button className={classes.button} onClick={() => changeList("currentHires")}>Current Hires</Button>}
-          {setPastHires && <Button className={classes.button} onClick={() => changeList("pastHires")}>Past Hires</Button>}
-          {setPendingRequests && <Button className={classes.button} onClick={() => changeList("pendingRequests")}>Pending Requests</Button>}
-          {setFindCaretakers && <Button className={classes.button} onClick={() => changeList("findCaretakers")}>Find Caretakers</Button>}
-          {setCurrentActivities && <Button className={classes.button} onClick={() => changeList("currentActivities")}>Current Activities</Button>}
-          {setPastActivities && <Button className={classes.button} onClick={() => changeList("pastActivities")}>Past Activities</Button>}
+          {setCurrentHires && <Button style={currentHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentHires")}>Current Hires</Button>}
+          {setPastHires && <Button style={ pastHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastHires")}>Past Hires</Button>}
+          {setPendingRequests && <Button style={ pendingRequests ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pendingRequests")}>Pending Requests</Button>}
+          {setFindCaretakers && <Button style={ findCaretakers ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("findCaretakers")}>Find Caretakers</Button>}
+          {setCurrentActivities && <Button style={ currentActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentActivities")}>Current Activities</Button>}
+          {setPastActivities && <Button style={ pastActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastActivities")}>Past Activities</Button>}
           <Button style={{margin: '10px'}} variant='contained' color='secondary' onClick={signOut}>Log Out</Button>
         </div>
       </AppBar>

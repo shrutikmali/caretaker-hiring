@@ -42,6 +42,10 @@ const Customer = () => {
       name={name} 
       signOut={signOut} 
       userType={userType} 
+      currentHires={currentHires} 
+      pastHires={pastHires} 
+      findCaretakers={findCaretakers} 
+      pendingRequests={pendingRequests} 
       setCurrentHires={setCurrentHires} 
       setPastHires={setPastHires}
       setPendingRequests={setPendingRequests}

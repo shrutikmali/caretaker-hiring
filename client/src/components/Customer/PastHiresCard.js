@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, Button, Typography } from '@material-ui/core';
+import { Grid, Paper, Button, Typography, Avatar } from '@material-ui/core';
 import FeedbackDetails from './FeedbackDetails';
 import { sendFeedback as feedbackAPI } from '../../api/customer';
 
@@ -10,7 +10,7 @@ const paperStyle = {
   padding: '10px',
 };
 
-const PastHiresCard = ({ id, caretakerName, startDate, endDate, feedback }) => {
+const PastHiresCard = ({ id, caretakerName, startDate, endDate, feedback, photo }) => {
   const [showFeedbackDetails, setShowFeedbackDetails] = useState(false);
   const [feedbackDetails, setFeedbackDetails] = useState({
     rating: '',
@@ -40,7 +40,7 @@ const PastHiresCard = ({ id, caretakerName, startDate, endDate, feedback }) => {
       <Paper style={paperStyle}>
         <Grid container spacing={2}>
           <Grid item xs={4} align='left'>
-          <img src='https://cdn-icons-png.flaticon.com/512/1946/1946429.png' height='40px' />
+            <Avatar src={photo}/>
           </Grid>
           <Grid item xs={8} align='left' style={{marginTop: '12px'}}>
             {caretakerName}

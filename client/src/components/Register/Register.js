@@ -146,7 +146,7 @@ const Register = () => {
         <Button color='primary' className={classes.button} onClick={changeUserType}>{user === CUSTOMER ? 'Caretaker' : 'Customer'} Sign Up</Button>
       </Grid>
       <Grid item xs={12} align='center'>
-        <Button color='primary' className={classes.button}>Have an accout? Sign In</Button>
+        <Button color='primary' className={classes.button} onClick={() => history.push('/login')}>Have an accout? Sign In</Button>
       </Grid>
     </Grid>
   );
