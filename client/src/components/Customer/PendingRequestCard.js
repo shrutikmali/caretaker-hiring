@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Grid, Button, Typography } from '@material-ui/core';
+import { Paper, Grid, Button, Typography, Avatar } from '@material-ui/core';
 import { cancelRequest as cancel } from '../../api/customer';
 
 const paperStyle = {
@@ -16,7 +16,7 @@ const PendingRequestCard = ( { id, startDate, endDate, caretakerName, additional
     <Paper style={paperStyle}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <img src='https://cdn-icons-png.flaticon.com/512/1946/1946429.png' height='40px' />
+          <Avatar />
         </Grid>
         <Grid item xs={8} align='left' style={{paddingTop: '20px'}}>
           {caretakerName}

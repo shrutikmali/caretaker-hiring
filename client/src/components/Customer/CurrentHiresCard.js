@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Grid, Button } from '@material-ui/core';
+import { Paper, Grid, Button, Avatar } from '@material-ui/core';
 
 const paperStyle = {
   width: '250px',
@@ -13,7 +13,7 @@ const CurrentHiresCard = ({ id, caretakerName, caretakerPhone, startDate, endDat
     <Paper style={paperStyle}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-        <img src='https://cdn-icons-png.flaticon.com/512/1946/1946429.png' height='40px' />
+          <Avatar />
         </Grid>
         <Grid item xs={8} align='left' style={{paddingTop: '20px'}}>
           {caretakerName}

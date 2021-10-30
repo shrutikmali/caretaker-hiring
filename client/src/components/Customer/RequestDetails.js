@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Button, TextField, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
 const buttonStyle = {

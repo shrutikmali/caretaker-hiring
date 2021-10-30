@@ -46,7 +46,7 @@ const Profile = ({ type }) => {
       }
       fetchDetails(token);
     }
-  }, []);
+  }, [type]);
 
   const handleChange = (e) => {
     setNewDetails({...newDetails, [e.target.name]: e.target.value});

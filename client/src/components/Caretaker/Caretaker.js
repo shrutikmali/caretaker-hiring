@@ -10,7 +10,6 @@ const Caretaker = () => {
   const [currentActivities, setCurrentActivities] = useState(true);
   const [pendingRequests, setPendingRequests] = useState(false);
   const [pastActivities, setPastActivities] = useState(false);
-  const [token, setToken] = useState('');
   const [name, setName] = useState('Name');
   const [photo, setPhoto] = useState("");
   const [showProfile, setShowProfile] = useState(false);
@@ -23,10 +22,9 @@ const Caretaker = () => {
       console.log('No token found');
       history.push('/login');
     }
-    setToken(temp);
     setName(localStorage.getItem('caretakerName'));
     setPhoto(localStorage.getItem("caretakerPhoto"));
-  }, []);
+  }, [history]);
 
   const signOut = () => {
     localStorage.removeItem('caretakerToken');

@@ -3,7 +3,6 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Customer from './components/Customer/Customer';
 import Caretaker from './components/Caretaker/Caretaker';
-import Test from './Test';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -22,9 +21,6 @@ const App = () => {
         </Route>
         <Route path='/caretaker' exact>
           <Caretaker />
-        </Route>
-        <Route path='/test' exact>
-          <Test />
         </Route>
         <Route path = '/' exact>
           <p>Go to localhost:3000/login for login</p>

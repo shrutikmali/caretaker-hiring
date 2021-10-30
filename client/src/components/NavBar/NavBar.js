@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Box, Button, Avatar, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 

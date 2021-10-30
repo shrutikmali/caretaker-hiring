@@ -13,7 +13,6 @@ const Customer = () => {
   const [pendingRequests, setPendingRequests] = useState(false);
   const [findCaretakers, setFindCaretakers] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
-  const [token, setToken] = useState('');
   const [photo, setPhoto] = useState('');
   const [name, setName] = useState('Name');
   const userType = 'customer';
@@ -25,10 +24,9 @@ const Customer = () => {
       console.log('No token found');
       history.push('/login');
     }
-    setToken(temp);
     setName(localStorage.getItem('customerName'));
     setPhoto(localStorage.getItem('customerPhoto'));
-  }, []);
+  }, [history]);
 
   const signOut = () => {
     localStorage.removeItem('customerToken');
