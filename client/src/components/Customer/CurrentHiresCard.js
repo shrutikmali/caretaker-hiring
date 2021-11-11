@@ -8,12 +8,13 @@ const paperStyle = {
   padding: '10px',
 }
 
-const CurrentHiresCard = ({ id, caretakerName, caretakerPhone, startDate, endDate, markAsComplete }) => {
+const CurrentHiresCard = ({ id, caretakerName, caretakerPhone, startDate, endDate, sendFeedback, caretakerPhoto }) => {
+
   return (
     <Paper style={paperStyle}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Avatar />
+          <Avatar src={caretakerPhoto} />
         </Grid>
         <Grid item xs={8} align='left' style={{paddingTop: '20px'}}>
           {caretakerName}
@@ -28,7 +29,7 @@ const CurrentHiresCard = ({ id, caretakerName, caretakerPhone, startDate, endDat
           End: {endDate}
         </Grid>
         <Grid item xs={12} align='center'>
-          <Button variant='contained' color='primary' onClick={() => markAsComplete(id)}>Complete</Button>
+          <Button variant='contained' color='primary' onClick={() => sendFeedback(id)}>Complete</Button>
         </Grid>
       </Grid>
     </Paper>

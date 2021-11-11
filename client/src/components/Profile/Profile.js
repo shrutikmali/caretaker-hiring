@@ -98,13 +98,13 @@ const Profile = ({ type }) => {
 
   return (
     <Grid container spacing={4} style={{marginTop: '20px'}}>
-      <Grid item xs={12} md={4} align='center'>
+      <Grid item xs={12} md={12} align='center'>
         <Avatar style={{width: '200px', height: '200px'}} src={newDetails.photo}/>
         {edit && <div>Upload image: <FileBase type="file" multiple={false} onDone={({base64}) => setNewDetails({...newDetails, photo: base64})}/></div>}
         {edit && <Button variant="contained" color="primary" style={{marginTop: '10px'}} onClick={() => setNewDetails({...newDetails, photo: ''})}>Clear image</Button>}
         {type === "caretaker" && <div style={{marginTop: '10px'}}><p>Rating: {newDetails.rating}</p></div>}
       </Grid>
-      <Grid item container xs={12} md={8} spacing={2}>
+      <Grid item container xs={12} md={12} align='center' spacing={2}>
         <Grid item xs={12}>
           <TextField variant="outlined" style={inputStyle} name="name" label="Name" value={newDetails.name} InputLabelProps={{shrink: true}} disabled onChange={handleChange}></TextField>
         </Grid>
@@ -113,6 +113,9 @@ const Profile = ({ type }) => {
         </Grid>
         {type === "caretaker" && <Grid item xs={12}>
           <TextField variant="outlined" style={inputStyle} name="phone" label="Phone" value={newDetails.phone} InputLabelProps={{shrink: true}} disabled={!edit} onChange={handleChange}></TextField>
+        </Grid>}
+        {type === "caretaker" && <Grid item xs={12}>
+          <TextField variant="outlined" style={inputStyle} name="charge" label="Charge" value={newDetails.charge} InputLabelProps={{shrink: true}} disabled={!edit} onChange={handleChange}></TextField>
         </Grid>}
         {type === "caretaker" && <Grid item xs={12}>
           <FormControl variant='outlined' style={inputStyle} disabled={!edit}>

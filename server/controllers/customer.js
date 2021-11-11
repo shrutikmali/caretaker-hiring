@@ -91,9 +91,11 @@ const currentHires = async (req, res) => {
     for(let i=0;i<currentHires.length;i++) {
       const request = await Request.findById(currentHires[i]);
       const caretaker = await Caretaker.findById(request.caretakerID);
-      hireList.push({id: currentHires[i], 
+      hireList.push({
+        id: currentHires[i], 
         caretakerName: caretaker.name, 
         caretakerPhone: caretaker.phone, 
+        caretakerPhoto: caretaker.photo,
         startDate: request.startDate, 
         endDate: request.endDate,
       });

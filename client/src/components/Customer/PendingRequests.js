@@ -26,7 +26,9 @@ const PendingRequests = () => {
     const token = localStorage.getItem('customerToken');
     await cancel(requestID, token)
     .then(res => {
-      setPendingRequestList(pendingRequestList);
+      alert("Request cancelled");
+      const newPendingRequestList = pendingRequestList.filter(id => id !== requestID);
+      setPendingRequestList(newPendingRequestList);
     })
     .catch(error => {
       console.log(error);

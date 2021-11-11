@@ -22,11 +22,11 @@ const RequestDetails = ({ open, setOpen, requestDetails, setRequestDetails, send
         Request Details
       </DialogTitle>
       <Grid container>
-        <Grid item xs={6} align='center'>
-          Start: <input type='date' name='startDate' value={requestDetails.startDate} onChange={handleChange} />
+        <Grid item xs={12} md={6} align='center'>
+          Start: <input type='date' style={{width: '150px'}} name='startDate' value={requestDetails.startDate} onChange={handleChange} />
         </Grid>
-        <Grid item xs={6} align='center'>
-          End: <input type='date' name='endDate' value={requestDetails.endDate} onChange={handleChange} />
+        <Grid item xs={12} md={6} align='center'>
+          End: <input type='date' style={{width: '150px'}} name='endDate' value={requestDetails.endDate} onChange={handleChange} />
         </Grid>
         <Grid item xs={12} align='center'>
           <TextField variant='outlined' multiline rows={4} label='Additional Details' style={{marginTop: '10px'}} name='additionalDetails' value={requestDetails.additionalDetails} onChange={handleChange} />

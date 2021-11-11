@@ -1,6 +1,5 @@
 import React from 'react';
 import { Paper, Grid, Button, Typography, Avatar } from '@material-ui/core';
-import { cancelRequest as cancel } from '../../api/customer';
 
 const paperStyle = {
   width: '250px',

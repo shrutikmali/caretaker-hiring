@@ -1,6 +1,7 @@
-import React from 'react';
-import { AppBar, Box, Button, Avatar, IconButton } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid, AppBar, Box, Button, Avatar, IconButton, useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { MdMenu, MdClose } from "react-icons/md";
 
 const useStyles = makeStyles(() => ({
   navbarContainer: {
@@ -51,7 +52,9 @@ const NavBar = ({
   pastActivities,
   }) => {
   const classes = useStyles();
-
+  const matches = useMediaQuery('(min-width:720px)');
+  
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const changeList = (str) => {
     setPastHires && setPastHires(false);
@@ -86,6 +89,7 @@ const NavBar = ({
       default:
         break;
     }
+    setShowMobileMenu(false);
   }
 
 
@@ -98,7 +102,7 @@ const NavBar = ({
           </IconButton>
           <p onClick={() => changeList("profile")} style={{cursor: 'pointer',}}>{name}</p>
         </div>
-        <div className={classes.navRight}>
+        {matches && <div className={classes.navRight}>
           {setCurrentHires && <Button style={currentHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentHires")}>Current Hires</Button>}
           {setPastHires && <Button style={ pastHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastHires")}>Past Hires</Button>}
           {setPendingRequests && <Button style={ pendingRequests ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pendingRequests")}>Pending Requests</Button>}
@@ -106,8 +110,34 @@ const NavBar = ({
           {setCurrentActivities && <Button style={ currentActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentActivities")}>Current Activities</Button>}
           {setPastActivities && <Button style={ pastActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastActivities")}>Past Activities</Button>}
           <Button style={{margin: '10px'}} variant='contained' color='secondary' onClick={signOut}>Log Out</Button>
-        </div>
+        </div>}
+        {!matches && <div className={classes.navRight}><IconButton onClick={() => setShowMobileMenu(!showMobileMenu)}>{!showMobileMenu ? <MdMenu style={{color: "white"}} /> : <MdClose style={{color: 'white'}} />}</IconButton></div>}
       </AppBar>
+      {showMobileMenu && 
+        <Grid container align='center' style={{backgroundColor: '#3f51b5', zIndex: '1', position: 'absolute'}}>
+          <Grid item xs={12}>
+            {setCurrentHires && <Button style={currentHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentHires")}>Current Hires</Button>}
+          </Grid>
+          <Grid item xs={12}>
+            {setPastHires && <Button style={ pastHires ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastHires")}>Past Hires</Button>}
+          </Grid>
+          <Grid item xs={12}>
+            {setPendingRequests && <Button style={ pendingRequests ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pendingRequests")}>Pending Requests</Button>}
+          </Grid>
+          <Grid item xs={12}>
+          {setFindCaretakers && <Button style={ findCaretakers ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("findCaretakers")}>Find Caretakers</Button>}
+          </Grid>
+          <Grid item xs={12}>
+          {setCurrentActivities && <Button style={ currentActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("currentActivities")}>Current Activities</Button>}
+          </Grid>
+          <Grid item xs={12}>
+          {setPastActivities && <Button style={ pastActivities ? {color: 'white'} : {color: 'lightgrey' } } className={classes.button} onClick={() => changeList("pastActivities")}>Past Activities</Button>}
+          </Grid>
+          <Grid item xs={12}>
+            <Button style={{margin: '10px'}} variant='contained' color='secondary' onClick={signOut}>Log Out</Button>
+          </Grid>
+        </Grid>
+      }
     </Box>
   )
 }

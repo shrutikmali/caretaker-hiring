@@ -169,12 +169,13 @@ const getPastActivities = async (req, res) => {
 const caretakerDetails = async (req, res) => {
   const caretakerID = req.id;
   try {
-    const { name, age, address, phone, photo, aboutMe, availability, preferredCustomer, rating } = await Caretaker.findById(caretakerID);
+    const { name, age, address, phone, charge, photo, aboutMe, availability, preferredCustomer, rating } = await Caretaker.findById(caretakerID);
     const details = {
       name,
       age,
       address,
       phone,
+      charge,
       photo,
       aboutMe,
       availability,

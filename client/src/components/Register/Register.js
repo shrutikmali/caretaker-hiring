@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
     minWidth: '200px',
     marginTop: '10px',
     marginBottom: '10px',
+    textTransform: 'none',
   }
 }));
 
@@ -41,6 +42,7 @@ const Register = () => {
     preferredCustomer: '',
     aboutMe: '',
     photo: '',
+    charge: '',
   };
   const [details, setDetails] = useState(defaultDetails);
   const history = useHistory();
@@ -118,7 +120,7 @@ const Register = () => {
           <TextField className={classes.input} variant='outlined' label='Emergency Phone' name='emergencyPhone' value={details.emergencyPhone} onChange={handleChange} />
         </Grid>}
         {user === CARETAKER && <Grid item xs={12} align='center'>
-          <FormControl variant='outlined' style={{width: '18%'}}>
+          <FormControl variant='outlined' style={{width: '50%'}}>
             <InputLabel id='select-label'>Preferred Customer</InputLabel>
             <Select label='Preferred Customer' style={{textAlign: 'left'}} labelId='select-label' name='preferredCustomer' value={details.preferredCustomer} onChange={handleChange}>
               <MenuItem value='any'>Any</MenuItem>
@@ -127,6 +129,9 @@ const Register = () => {
               <MenuItem value='elderly'>Elderly</MenuItem>
             </Select>
           </FormControl>
+        </Grid>}
+        {user === CARETAKER && <Grid item xs={12} align='center'>
+          <TextField className={classes.input} variant='outlined' label='Charge' name='charge' value={details.charge} onChange={handleChange} />
         </Grid>}
         <Grid item xs={12} align='center'>
           <TextField className={classes.input} variant='outlined' multiline rows={5} label='Address' name='address' value={details.address} onChange={handleChange} />
@@ -140,10 +145,10 @@ const Register = () => {
       </Grid>
       <Grid md={2}></Grid>
       <Grid item xs={12} align='center'>
-        <Button variant='contained' color='primary' className={classes.button} onClick={signUp}>Sign Up</Button>
+        <Button variant='contained' color='primary' className={classes.button} onClick={signUp}>Register</Button>
       </Grid>
       <Grid item xs={12} align='center'>
-        <Button color='primary' className={classes.button} onClick={changeUserType}>{user === CUSTOMER ? 'Caretaker' : 'Customer'} Sign Up</Button>
+        <Button color='primary' className={classes.button} onClick={changeUserType}>{user === CUSTOMER ? 'Caretaker' : 'Customer'} Registration</Button>
       </Grid>
       <Grid item xs={12} align='center'>
         <Button color='primary' className={classes.button} onClick={() => history.push('/login')}>Have an accout? Sign In</Button>

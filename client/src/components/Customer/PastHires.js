@@ -12,7 +12,7 @@ const PastHires = () => {
       await past(token)
       .then(res => {
         setPastList(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(error => {
         console.log(error);
