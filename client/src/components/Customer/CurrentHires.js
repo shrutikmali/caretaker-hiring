@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import CurrentHiresCard from './CurrentHiresCard';
 import { currentHires as current } from '../../api/customer';
-import { markAsComplete as complete } from '../../api/customer';
-import FeedbackDetails from './FeedbackDetails';
+
 
 const CurrentHires = () => {
   const [currentList, setCurrentList] = useState([]);
-  const [showFeedbackDetails, setShowFeedbackDetails] = useState(null);
-  const [feedbackDetails, setFeedbackDetails] = useState({
-    rating: '',
-    feedback: '',
-  });
+  
+ 
+
 
   useEffect(() => {
     const token = localStorage.getItem('customerToken');
@@ -28,17 +25,6 @@ const CurrentHires = () => {
   }, []);
 
 
-  const markAsComplete = async (id) => {
-    const token = localStorage.getItem('customerToken');
-    await complete(token, id)
-    .then(res => {
-      const newCurrentList = currentList.filter(current => current !== id);
-      setCurrentList(newCurrentList);
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
 
 
   return (
@@ -54,18 +40,18 @@ const CurrentHires = () => {
             caretakerPhoto={currentHire.caretakerPhoto} 
             startDate={currentHire.startDate} 
             endDate={currentHire.endDate} 
-            markAsComplete={markAsComplete} 
-            sendFeedback={setShowFeedbackDetails} />
+            currentList={currentList} 
+            setCurrentList={setCurrentList} />
           </Grid>
         ))}
       </Grid>
-      {showFeedbackDetails && 
+      {/* {showFeedbackDetails && 
       <FeedbackDetails 
       open={showFeedbackDetails} 
       setOpen={setShowFeedbackDetails} 
       feedbackDetails={feedbackDetails} 
       setFeedbackDetails={setFeedbackDetails} 
-      />}
+      />} */}
     </div>
   );
 }

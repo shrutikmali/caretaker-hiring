@@ -18,8 +18,8 @@ const PastHiresCard = ({ id, caretakerName, startDate, endDate, feedback, photo 
   });
 
   const sendFeedback = async () => {
-    setShowFeedbackDetails(true);
     const token = localStorage.getItem("customerToken");
+    console.log(feedbackDetails);
     await feedbackAPI(token, id, feedbackDetails)
     .then(res => {
       console.log(res);

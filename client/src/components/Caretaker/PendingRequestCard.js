@@ -8,14 +8,14 @@ const paperStyle = {
   padding: '10px',
 };
 
-const PendingRequestCard = ({ id, customerName, customerAge, startDate, endDate, additionalDetails, acceptRequest, declineRequest }) => {
+const PendingRequestCard = ({ id, customerName, customerAge, startDate, endDate, additionalDetails, photo, acceptRequest, declineRequest }) => {
 
   
   return (
     <Paper style={paperStyle}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Avatar />
+          <Avatar src={photo} />
         </Grid>
         <Grid item xs={8} align='left' style={{paddingTop: '20px'}}>
           {customerName}

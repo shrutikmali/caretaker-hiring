@@ -35,7 +35,8 @@ const PendingRequests = () => {
     const token = localStorage.getItem('caretakerToken');
     await decline(token, requestID)
     .then(res => {
-      console.log(res);
+      const newPendingList = pendingList.filter(id => id !== requestID);
+      setPendingList(newPendingList);
     })
     .catch(error => {
       console.log(error);
@@ -54,6 +55,7 @@ const PendingRequests = () => {
           startDate={request.startDate} 
           endDate={request.endDate} 
           additionalDetails={request.additionalDetails} 
+          photo={request.photo} 
           acceptRequest={acceptRequest} 
           declineRequest={declineRequest} />
         </Grid>

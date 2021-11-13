@@ -6,7 +6,7 @@ const buttonStyle = {
   marginTop: '15px',
 };
 
-const FeedbackDetails = ({ open, setOpen, feedbackDetails, setFeedbackDetails, sendFeedback }) => {
+const FeedbackDetails = ({ open, setOpen, feedbackDetails, setFeedbackDetails, markAsComplete, sendFeedback, sendLater }) => {
 
   const handleClose = () => {
     setFeedbackDetails({
@@ -36,7 +36,7 @@ const FeedbackDetails = ({ open, setOpen, feedbackDetails, setFeedbackDetails, s
           </Select>
         </Grid>
         <Grid item xs={12} align='center'>
-          <TextField variant='outlined' multiline rows={4} label='Feedback' style={{marginTop: '20px', width: '400px',}} name='feedback' value={feedbackDetails.feedback} onChange={handleChange}/>
+          <TextField variant='outlined' multiline rows={4} label='Feedback' style={{marginTop: '20px', width: '270px'}} name='feedback' value={feedbackDetails.feedback} onChange={handleChange}/>
         </Grid>
       </Grid>
       <DialogActions>
@@ -44,7 +44,10 @@ const FeedbackDetails = ({ open, setOpen, feedbackDetails, setFeedbackDetails, s
           <Grid item xs={12} md={6} align='center'>
             <Button variant='contained' color='primary' style={buttonStyle} onClick={sendFeedback}>Submit</Button>
           </Grid>
-          <Grid item xs={12} md={6} align='center'>
+          {sendLater && <Grid item xs={12} md={6} align='center'>
+            <Button variant='contained' color='primary' style={buttonStyle} onClick={markAsComplete}>Send Later</Button>
+          </Grid>}
+          <Grid item xs={12} md={sendLater ? 12 : 6} align='center'>
             <Button variant='contained' color='secondary' style={buttonStyle} onClick={handleClose}>Cancel</Button>
           </Grid>
         </Grid>

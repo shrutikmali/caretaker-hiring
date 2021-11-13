@@ -65,6 +65,7 @@ const pendingRequests = async (req, res) => {
         startDate: request.startDate, 
         endDate: request.endDate, 
         additionalDetails: request.additionalDetails,
+        photo: customer.photo,
       });
     }
     res.status(200).json(requestList);
@@ -105,7 +106,20 @@ const declineRequest = async (req, res) => {
   const { requestID } = req.body;
   console.log(caretakerID);
   console.log(requestID);
-  res.status(200).send("Success");
+  try {
+    const request = await Request.findById(requestID);
+    const customerID = request.customerID;
+    const { pendingRequests: caretakerPending } = await Caretaker.findById(caretakerID);
+    const { pendingRequests: customerPending } = await Customer.findById(customerID);
+    const newCaretakerPending = caretakerPending.filter(id => id !== requestID);
+    const newCustomerPending = customerPending.filter(id => id !== requestID);
+    await Customer.findByIdAndUpdate(customerID, {pendingRequests: newCustomerPending});
+    await Caretaker.findByIdAndUpdate(caretakerID, {pendingRequests: newCaretakerPending});
+    res.status(200).json("Success");
+  }
+  catch (error) {
+    res.status(500).json({message: error.message});
+  }
 }
 
 const currentActivities = async (req, res) => {
